@@ -11,10 +11,12 @@ namespace WebShop.Models
 
         }
 
-        //setam ce trebuie managed de dbcontext 
+        //setam tabelele gestionate de dbcontext 
         public DbSet<Pie> Pies { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
 
         //adaugam date in db

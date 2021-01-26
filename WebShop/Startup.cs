@@ -27,14 +27,19 @@ namespace WebShop
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //inregistram dbcontext
+            //setam dbcontext-ul 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // inregistram in services clasele mock 
+            // inregistram in services clasele pt dependency injection 
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+            //invocam getcart de la primul request pt a introduce cartId-ul
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            //suport pt accesare sesiuni
+            services.AddHttpContextAccessor();
+            //support pt sesiuni
+            services.AddSession();
             // implementam mvc
             services.AddControllersWithViews();
         }
@@ -51,11 +56,13 @@ namespace WebShop
             app.UseHttpsRedirection();
             // middleware pt a putea folosi fisiere statice (wwwroot)
             app.UseStaticFiles();
+            //middleware pt suport sesiuni (obligatoriu inainte de routing!!!)
+            app.UseSession();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                // mapam orice request cu actiunea unui controller
+                // mapam orice request cu actiunea unui controller + id optional
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
