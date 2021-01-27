@@ -24,13 +24,37 @@ namespace WebShop.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public ViewResult List()
-        {
-            PiesListViewModel piesListViewModel = new PiesListViewModel();
-            piesListViewModel.Pies = _pieRepository.AllPies;
-            piesListViewModel.CurrentCategory = "Cheese cakes";
+        //public ViewResult List()
+        //{
+        //    PiesListViewModel piesListViewModel = new PiesListViewModel();
+        //    piesListViewModel.Pies = _pieRepository.AllPies;
+        //    piesListViewModel.CurrentCategory = "Cheese cakes";
 
-            return View(piesListViewModel);
+        //    return View(piesListViewModel);
+        //}
+
+        public ViewResult List(string category)
+        {
+            IEnumerable<Pie> pies;
+            string currentCategory;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                pies = _pieRepository.AllPies.OrderBy(p => p.PieId);
+                currentCategory = "All pies";
+            }
+            else
+            {
+                pies = _pieRepository.AllPies.Where(p => p.Category.CategoryName == category)
+                    .OrderBy(p => p.PieId);
+                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+            }
+
+            return View(new PiesListViewModel
+            {
+                Pies = pies,
+                CurrentCategory = currentCategory
+            });
         }
 
         public IActionResult Details(int id)
@@ -40,5 +64,7 @@ namespace WebShop.Controllers
                 return NotFound();
             return View(pie);
         }
+
+
     }
 }
