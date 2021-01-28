@@ -36,6 +36,7 @@ namespace WebShop
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             //invocam getcart de la primul request pt a introduce cartId-ul
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped<IOrderRepository, OrderRepository>();
             //suport pt accesare sesiuni
             services.AddHttpContextAccessor();
             //support pt sesiuni

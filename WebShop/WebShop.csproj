@@ -19,6 +19,8 @@
     <Folder Include="Views\Shared\Components\" />
     <Folder Include="Views\Shared\Components\ShoppingCartSummary\" />
     <Folder Include="Views\Shared\Components\CategoryMenu\" />
+    <Folder Include="Views\Order\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\bootstrap.min.css.map" />

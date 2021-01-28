@@ -37,5 +37,26 @@ namespace WebShop.Models
         {
             return _appDbContext.Pies.FirstOrDefault(p => p.PieId == pieId);
         }
+
+        public void AddNewPie(Pie pie)
+        {
+            _appDbContext.Pies.Add(pie);
+
+            _appDbContext.SaveChanges();
+        }
+
+        public void RemovePie(Pie pie)
+        {
+            _appDbContext.Pies.Remove(pie);
+
+            _appDbContext.SaveChanges();
+        }
+
+        public void EditPie(Pie pie)
+        {
+            _appDbContext.Attach(pie).State = EntityState.Modified;
+
+            _appDbContext.SaveChanges();
+        }
     }
 }

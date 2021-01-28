@@ -1,0 +1,16 @@
+﻿@model AdminListViewModel
+
+
+<h1>Pie Repository Administration</h1>
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <p class="button">
+        <a class="btn btn-primary"
+            asp-controller="Admin"
+            asp-action="AddNewItemForm"
+            asp-route-pieId="">Add New Pie</a>
+    </p>
+</div>
+    @foreach (var pie in Model.Pies)
+    {
+        <partial name="_AdminPieCard" model="pie" />
+    }
